@@ -16,12 +16,38 @@ namespace APIBoletim.Repositories {
         //Calling the objects that will be able to receive and execute the database commands
         SqlCommand cmd = new SqlCommand();
 
-        public Aluno Change(Aluno a) { 
-            throw new NotImplementedException();
+        public Aluno Update(int id,Aluno a) {
+            cmd.Connection = connect.ToConnect();
+
+            cmd.CommandText = "UPDATE Aluno SET  " +
+                "Nome = @nome, " +
+                "Ra = @Ra, " +
+                "Idade = @idade WHERE IdAluno = @id";
+
+            cmd.Parameters.AddWithValue("@nome", a.Nome);
+            cmd.Parameters.AddWithValue("@Ra", a.Ra);
+            cmd.Parameters.AddWithValue("@idade", a.Idade);
+
+            //definindo de onde vem o id // defining where the id comes from
+            cmd.Parameters.AddWithValue("@id", id);
+
+            cmd.ExecuteNonQuery();
+
+            connect.Desconect();
+
+            return a;
     }
 
-        public Aluno Delete(Aluno a) {
-            throw new NotImplementedException();
+        public void Delete(int id) {
+            cmd.Connection = connect.ToConnect();
+
+            cmd.CommandText = "DELETE FROM Aluno WHERE IdAluno = @id";
+            cmd.Parameters.AddWithValue("@id", id);
+
+            //Run command
+            cmd.ExecuteNonQuery();
+
+            connect.Desconect();
         }
 
         public List<Aluno> ReadAll() {
@@ -67,6 +93,8 @@ namespace APIBoletim.Repositories {
             cmd.ExecuteNonQuery();
 
             //DML -> ExecuteNonQuery
+
+            connect.Desconect();
 
             return a;
         }

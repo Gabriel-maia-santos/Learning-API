@@ -11,7 +11,7 @@ namespace APIBoletim.Interfaces {
         Aluno Register(Aluno a);
         List<Aluno> ReadAll();
         Aluno SearchbyId(int id);
-        Aluno Change(Aluno a);
-        Aluno Delete(Aluno a);
+        Aluno Update(int id, Aluno a);
+        void Delete(int id);
     }
 }
